@@ -1,0 +1,8 @@
+/* side-by-side media on the home page and the quickstart */
+table.gallery { width: 100%; border: none; border-collapse: collapse; margin: 1rem 0; }
+table.gallery td { width: 50%; padding: 0 0.4rem; border: none; text-align: center; vertical-align: top; }
+table.gallery img, table.gallery video { width: 100%; border-radius: 6px; }
+/* the pipeline diagram has its own light boxes: give it a light card in dark mode */
+img[src$="pipeline.svg"] { background: #ffffff; border-radius: 8px; padding: 6px; }
+img.lineup { width: 100%; border-radius: 6px; margin-top: 0.8rem; }
+video.lineup { width: 100%; border-radius: 6px; }

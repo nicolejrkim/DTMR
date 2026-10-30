@@ -1,0 +1,11 @@
+# Unitree G1: sprint at 3 m/s with flight phases, handcrafted (no mocap).
+#
+# The reference is generated, not downloaded:
+#   python -m dtmr.utils.data_pipeline.handcrafted.sprint_g1 --out-dir data/handcrafted
+# (or `python -m dtmr.demo prepare g1_sprint`). Every tracker setting is the
+# release recipe (unitree_g1_release_warp.yaml); only the clip and the step budget differ.
+# 430 frames at 50 fps = 8.6 s, 16.8 m of travel.
+
+base_config: unitree_g1_release_warp.yaml
+motion_path: ./data/handcrafted/hc_sprint_50Hz.npz
+n_steps: 800

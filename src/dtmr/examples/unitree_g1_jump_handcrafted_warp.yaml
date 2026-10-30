@@ -1,0 +1,11 @@
+# Unitree G1: three consecutive standing broad jumps, handcrafted (no mocap).
+#
+# The reference is generated, not downloaded:
+#   python -m dtmr.utils.data_pipeline.handcrafted.jump_g1 --out-dir data/handcrafted
+# (or `python -m dtmr.demo prepare g1_jump`). Every tracker setting is the
+# release recipe (unitree_g1_release_warp.yaml); only the clip and the step budget differ.
+# 336 frames at 50 fps = 6.7 s; n_steps leaves headroom for TMR to play slower than 1x.
+
+base_config: unitree_g1_release_warp.yaml
+motion_path: ./data/handcrafted/hc_jump_50Hz.npz
+n_steps: 600

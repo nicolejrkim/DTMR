@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+title: Dense Temporal Motion Retargeting (DTMR) sampling-based MPC tracker
+message: If you use this software, please cite the paper below.
+type: software
+authors:
+  - given-names: Jaeryeong
+    family-names: Kim
+    affiliation: ETH Zürich
+  - given-names: Taerim
+    family-names: Yoon
+    affiliation: ETH Zürich
+license: Apache-2.0
+repository-code: https://github.com/nicolejrkim/DTMR
+url: https://jaeryeongnicolekim.com/Dense-Temporal-Motion-Retargeting-For-Legged-Robots/
+preferred-citation:
+  type: article
+  title: Dense Temporal Motion Retargeting for Legged Robots
+  year: 2026
+  doi: 10.48550/arXiv.2609.38617
+  url: https://arxiv.org/abs/2609.38617
+  identifiers:
+    - type: other
+      value: arXiv:2609.38617
+      description: arXiv preprint (cs.RO)
+  notes: Jaeryeong Kim and Taerim Yoon contributed equally.
+  authors:
+    - given-names: Jaeryeong
+      family-names: Kim
+      affiliation: ETH Zürich
+    - given-names: Taerim
+      family-names: Yoon
+      affiliation: ETH Zürich
+    - given-names: Jin
+      family-names: Cheng
+      affiliation: ETH Zürich
+    - given-names: Sungjoon
+      family-names: Choi
+      affiliation: Korea University
+    - given-names: Stelian
+      family-names: Coros
+      affiliation: ETH Zürich
+references:
+  - type: software
+    title: "DIAL-MPC: Diffusion-Inspired Annealing For Legged MPC"
+    authors:
+      - given-names: Haoru
+        family-names: Xue
+    url: https://github.com/LeCAR-Lab/dial-mpc

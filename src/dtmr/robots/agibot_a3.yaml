@@ -1,0 +1,24 @@
+# AgiBot A3 T3.0, 31 actuated joints (official AgibotTech/A3-A3U-robot-model names, capitalised *_Link bodies).
+# Joint order: waist yaw/roll/pitch, head yaw/pitch, left arm (7: shoulder pitch/roll/yaw, elbow, wrist roll/pitch/yaw), right arm (7), left leg (6), right leg (6) - legs LAST.
+model_dir: agibot_a3
+model_file: scene_mjx_torque_tracking.xml
+
+# AgiBot's published SONIC gains for the A3 (AgibotTech/sonic_for_a3 robots/a3.py, a3_024 contract): hip roll 120/4, hip yaw/pitch 80/3,
+# knee 250/8, ankles 60/1.2, waist 85/3 - 50/2, shoulders 40/3, elbow + wrist roll 30/2, wrist pitch/yaw + head 20/2.
+# PD gains, one per actuated joint in model order.
+kp: [85, 50, 50, 20, 20, 40, 40, 30, 30, 30, 20, 20, 40, 40, 30, 30, 30, 20, 20, 80, 120, 80, 250, 60, 60, 80, 120, 80, 250, 60, 60]
+kd: [3, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 3, 3, 2, 2, 2, 2, 2, 3, 4, 3, 8, 1.2, 1.2, 3, 4, 3, 8, 1.2, 1.2]
+
+joint_groups:
+  waist: [waist_*]
+  head: ['*head*']
+  arms: ['*shoulder*', '*elbow*', '*wrist*']
+  legs: ['*hip*', '*knee*', '*ankle*']
+
+# The head is a real tracked body (head_pitch_Link), so no synthetic head keypoint.
+cost_config:
+  foot_bodies:              [left_ankle_roll_Link, right_ankle_roll_Link]
+  flight_feet_links:        [left_ankle_roll_Link, right_ankle_roll_Link]
+  knee_ground_bodies:       [left_knee_Link, right_knee_Link]
+  # bodies allowed to touch the floor or each other: feet and the forearm/hand links
+  undesired_allowed_bodies: [left_ankle_roll_Link, right_ankle_roll_Link, left_wrist_yaw_Link, right_wrist_yaw_Link]

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+
+# Run artifacts and machine-local state
+output/
+logs/
+wandb/
+.warp_cache*/
+MUJOCO_LOG.TXT
+*.html
+
+# Downloaded clips and reference motions are not versioned; see docs/HUMAN_MOTION.md
+input/
+data/
+
+# Sphinx build output
+docs/_build/

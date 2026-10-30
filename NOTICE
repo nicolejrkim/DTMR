@@ -1,0 +1,14 @@
+This repository is derived from DIAL-MPC
+(https://github.com/LeCAR-Lab/dial-mpc), Copyright (c) the DIAL-MPC authors,
+licensed under the Apache License, Version 2.0. The sampling-based MPC
+controller structure and the Warp
+backend scaffolding originate there; the temporal motion retargeting tracker,
+the MuJoCo Warp environments, the humanoid tracking models and the
+data pipeline were added on top.
+
+Robot description files under src/dtmr/models/ keep the licenses of their
+respective vendors (Unitree Robotics BSD-3-Clause for the G1, H1-2 and R1
+models, Booster Robotics BSD-3-Clause for the K1 model, Apache-2.0 for the T1
+model from MuJoCo Menagerie, AgiBot Mulan Permissive Software License v2 for
+the X2 Ultra and A3 models); see the LICENSE and README files inside each
+model directory.

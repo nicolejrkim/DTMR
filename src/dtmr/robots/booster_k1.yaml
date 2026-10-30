@@ -1,0 +1,32 @@
+# Booster K1, 22 actuated joints (no waist). Names follow Booster's official
+# booster_assets K1_22dof.xml, including its aa-prefixed head and shoulder-pitch joints.
+# Joint order: head (2), left arm (4), right arm (4), left leg (6), right leg (6).
+model_dir: booster_k1
+model_file: scene_mjx_torque_tracking.xml
+
+# Legs from htwk-gym's K1 walking config (Booster's T1 gains halved with the mass);
+# arms and head are holosoma's T1 arm gains scaled by the K1/T1 effort ratio.
+# kp is 1.5x that set (12 / 22.5 / 150 / 75), kd unchanged.
+kp: [12, 12,                              # head yaw/pitch
+     22.5, 22.5, 22.5, 22.5,                    # left arm:  shoulder pitch/roll, elbow pitch/yaw
+     22.5, 22.5, 22.5, 22.5,                    # right arm
+     150, 150, 150, 150, 75, 75,        # left leg:  hip pitch/roll/yaw, knee, ankle pitch/roll
+     150, 150, 150, 150, 75, 75]        # right leg
+kd: [0.4, 0.4,
+     0.5, 0.5, 0.5, 0.5,
+     0.5, 0.5, 0.5, 0.5,
+     2, 2, 2, 2, 1, 1,
+     2, 2, 2, 2, 1, 1]
+
+joint_groups:
+  head: ["*head*"]
+  arms: ["*shoulder*", "*elbow*"]
+  legs: ["*hip*", "*knee*", "*ankle*"]
+
+# The head is a real tracked body (aahead_pitch_link), so no synthetic head keypoint.
+cost_config:
+  foot_bodies:              [left_ankle_roll_link, right_ankle_roll_link]
+  flight_feet_links:        [left_ankle_roll_link, right_ankle_roll_link]
+  knee_ground_bodies:       [left_knee_pitch_link, right_knee_pitch_link]
+  # the elbow_yaw body is the forearm and hand link on this rig
+  undesired_allowed_bodies: [left_ankle_roll_link, right_ankle_roll_link, left_elbow_yaw_link, right_elbow_yaw_link]

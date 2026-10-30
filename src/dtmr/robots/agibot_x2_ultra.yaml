@@ -1,0 +1,24 @@
+# AgiBot X2 Ultra, 31 actuated joints (official AgibotTech/agibot_x2_urdf names).
+# Joint order: left leg (6), right leg (6), waist yaw/pitch/roll, left arm (7: shoulder pitch/roll/yaw, elbow, wrist yaw/pitch/roll), right arm (7), head yaw/pitch.
+model_dir: agibot_x2_ultra
+model_file: scene_mjx_torque_tracking.xml
+
+# Legs + head: GR00T-WholeBodyControl PR #112 x2_ultra training PD x the sonic-x2 deploy trims; legs x2 and the
+# effort-ratio waist / arms (shoulders 144, elbow 38, wrists 19).
+# PD gains, one per actuated joint in model order.
+kp: [198.2, 198.2, 198.2, 237.8, 40, 32.8, 198.2, 198.2, 198.2, 237.8, 40, 32.8, 40.2, 28.5, 28.5, 144, 144, 96, 38, 19, 19, 19, 144, 144, 96, 38, 19, 19, 19, 16.8, 16.8]
+kd: [3, 3, 3, 5, 1.81, 1.36, 3, 3, 3, 5, 1.81, 1.36, 3.84, 5, 5, 0.91, 0.91, 0.91, 0.91, 0.91, 1.07, 1.07, 0.91, 0.91, 0.91, 0.91, 0.91, 1.07, 1.07, 1.07, 1.07]
+
+joint_groups:
+  legs: ['*hip*', '*knee*', '*ankle*']
+  waist: [waist_*]
+  arms: ['*shoulder*', '*elbow*', '*wrist*']
+  head: ['*head*']
+
+# The head is a real tracked body (head_pitch_link), so no synthetic head keypoint.
+cost_config:
+  foot_bodies:              [left_ankle_roll_link, right_ankle_roll_link]
+  flight_feet_links:        [left_ankle_roll_link, right_ankle_roll_link]
+  knee_ground_bodies:       [left_knee_link, right_knee_link]
+  # bodies allowed to touch the floor or each other: feet and the forearm/hand links
+  undesired_allowed_bodies: [left_ankle_roll_link, right_ankle_roll_link, left_wrist_roll_link, right_wrist_roll_link]

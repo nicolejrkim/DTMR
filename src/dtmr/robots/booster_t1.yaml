@@ -1,0 +1,30 @@
+# Booster T1, 23 actuated joints (deployment rig: head, no wrists).
+# Joint order: head (2), left arm (4), right arm (4), waist (1), left leg (6), right leg (6).
+model_dir: booster_t1
+model_file: scene_mjx_torque_tracking.xml
+
+kp: [10, 10,                            # head yaw/pitch
+     20, 20, 20, 20,                    # left arm:  shoulder pitch/roll, elbow pitch/yaw
+     20, 20, 20, 20,                    # right arm
+     200,                               # waist
+     200, 200, 200, 200, 50, 50,        # left leg:  hip pitch/roll/yaw, knee, ankle pitch/roll
+     200, 200, 200, 200, 50, 50]        # right leg
+kd: [0.5, 0.5,
+     0.5, 0.5, 0.5, 0.5,
+     0.5, 0.5, 0.5, 0.5,
+     5,
+     5, 5, 5, 5, 3, 3,
+     5, 5, 5, 5, 3, 3]
+
+joint_groups:
+  head:  ["*head*"]
+  arms:  ["*shoulder*", "*elbow*"]
+  waist: ["waist"]
+  legs:  ["*hip*", "*knee*", "*ankle*"]
+
+# The head is a real tracked body (H2), so no synthetic head keypoint is needed.
+cost_config:
+  foot_bodies:              [left_foot_link, right_foot_link]
+  flight_feet_links:        [left_foot_link, right_foot_link]
+  knee_ground_bodies:       [Shank_Left, Shank_Right]
+  undesired_allowed_bodies: [left_foot_link, right_foot_link, left_hand_link, right_hand_link]

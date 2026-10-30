@@ -1,0 +1,58 @@
+# Unitree G1: standing still, posed as a tracking problem.
+#
+# Tracks a constant reference: the model's home keyframe turned into link world poses
+# and held for 1000 frames (20 s). The ordinary tracking cost then penalises any
+# deviation from the home pose, so no dedicated upright cost is needed.
+#
+# Build the reference with
+#   python -m dtmr.data.build_home_hold_reference
+#   -> data/home_hold/home_hold_50Hz.npz
+# Run:
+#   dtmr --config src/dtmr/examples/unitree_g1_home_hold_warp.yaml --output_dir output/home_hold
+
+robot: unitree_g1
+seed: 0
+
+# MPPI / diffusion search (canonical strong-search setpoint)
+Nsample: 8192
+Hsample: 40
+Hnode: 8
+Ndiffuse: 16
+Ndiffuse_init: 16
+sigma_scale: 0.45
+temp_sample: 0.15
+horizon_diffuse_factor: 0.9
+traj_diffuse_factor: 0.9
+
+# Integration / reference
+dt: 0.02
+timestep: 0.005
+action_scale: 1.0
+motion_fps: 50
+dphi_exp_base: 2.0        # TMR phase-as-action (inert on a constant reference)
+inner_rate_pd: true
+
+# Commanded joint range: a ±0.5 rad band around the (constant home) reference keeps
+# the search near the standing pose (caps knee/hip flex) so it cannot wander into a crouch.
+auto_joint_range: true
+joint_range_margin_abs: 0.5
+joint_range_margin_ratio: 0.05
+joint_range_round_to: 0.1
+joint_range_min_width: 0.05
+clip_joint_range_to_physical: true
+
+# Standard tracking cost — tracking a constant home reference == hold the pose.
+cost_config:
+  head_keypoint_offset: null     # no head keypoint while holding the home pose
+  w_pos_relcom: 14.0     # COM-relative link positions
+  w_com: 28.0            # center-of-mass position
+  w_orient_pure: 5.0     # link orientations
+  w_orient_offset: 0.0
+  w_energy: 0.05
+  w_dphi: 5.0            # phase regularity
+  w_joint_vel: 1.0e-05
+  w_action_rate: 1.0
+
+motion_path: ./data/home_hold/home_hold_50Hz.npz
+n_steps: 100
+sigma_scale_phi: 0.3

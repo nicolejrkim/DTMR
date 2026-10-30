@@ -1,0 +1,32 @@
+# Unitree G1, 29 actuated joints.
+# Joint order: left leg (6), right leg (6), waist (3), left arm (7), right arm (7).
+model_dir: unitree_g1
+model_file: scene_mjx_torque_tracking.xml
+
+# Gains are the GR00T whole-body-control PD gains.
+# PD gains, one per actuated joint in model order.
+kp: [150, 150, 150, 200, 40, 40,        # left leg:  hip pitch/roll/yaw, knee, ankle pitch/roll
+     150, 150, 150, 200, 40, 40,        # right leg
+     250, 250, 250,                     # waist yaw/roll/pitch
+     100, 100, 100, 40, 20, 20, 20,     # left arm:  shoulder pitch/roll/yaw, elbow, wrist roll/pitch/yaw
+     100, 100, 100, 40, 20, 20, 20]     # right arm
+kd: [2, 2, 2, 4, 2, 2,
+     2, 2, 2, 4, 2, 2,
+     5, 5, 5,
+     2, 2, 2, 2, 1, 1, 1,
+     2, 2, 2, 2, 1, 1, 1]
+
+# Named joint groups (case-insensitive glob patterns on joint names).
+joint_groups:
+  legs:  ["*hip*", "*knee*", "*ankle*"]
+  waist: ["waist_*"]
+  arms:  ["*shoulder*", "*elbow*", "*wrist*"]
+
+cost_config:
+  foot_bodies:              [left_ankle_roll_link, right_ankle_roll_link]
+  flight_feet_links:        [left_ankle_roll_link, right_ankle_roll_link]
+  knee_ground_bodies:       [left_knee_link, right_knee_link]
+  # bodies allowed to touch the floor or each other: feet and hands
+  undesired_allowed_bodies: [left_ankle_roll_link, right_ankle_roll_link, left_wrist_yaw_link, right_wrist_yaw_link]
+  head_keypoint_parent: torso_link
+  head_keypoint_offset: [0.0, 0.0, 0.43]    # the head sphere in the torso frame

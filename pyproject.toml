@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dtmr"
+version = "0.1.0"
+description = "Dense Temporal Motion Retargeting: sampling-based MPC motion tracker on MuJoCo Warp for humanoid and quadruped robots"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Jaeryeong Kim" }, { name = "Taerim Yoon" }]
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+keywords = ["humanoid", "robotics", "motion-tracking", "model-predictive-control", "mujoco", "retargeting"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Intended Audience :: Science/Research",
+]
+dependencies = [
+    "numpy<2.0.0",
+    "scipy",
+    # pinned to the versions the paper's runs used; newer mujoco-warp releases change the make_data / put_model API
+    "mujoco==3.7.0",
+    "mujoco-warp==3.7.0.1",
+    "warp-lang>=1.12.0,<1.13",
+    "pyyaml",
+    "tqdm",
+    "fastdtw",
+    "joblib",
+]
+
+[project.optional-dependencies]
+viz = ["jax[cuda12]", "brax", "flask"]   # Brax HTML replay and ghost overlays; the tracker needs neither
+seed = ["pandas", "pyarrow"]             # `seed_fetch search` over the SEED metadata
+
+[project.scripts]
+dtmr = "dtmr.tracker:main"
+
+[project.urls]
+Documentation = "https://jaeryeongnicolekim.com/DTMR/"
+Repository = "https://github.com/nicolejrkim/DTMR"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dtmr = ["models/**/*", "examples/*.yaml", "robots/*.yaml"]

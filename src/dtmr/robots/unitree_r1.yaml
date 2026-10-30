@@ -1,0 +1,30 @@
+# Unitree R1, 24 actuated joints.
+# Joint order: left leg (6), right leg (6), waist (2), left arm (5), right arm (5).
+model_dir: unitree_r1
+model_file: scene_mjx_torque_tracking.xml
+
+# kp and kd: 2x the TWIST set (120 / 40 ankles, kd 3 / 4 / 2 / 1).
+kp: [120, 120, 120, 120, 40, 40,            # left leg:  hip pitch/roll/yaw, knee, ankle pitch/roll
+     120, 120, 120, 120, 40, 40,            # right leg
+     120, 120,                            # waist roll/yaw
+     80, 80, 50, 50, 30,                # left arm:  shoulder pitch/roll/yaw, elbow, wrist roll
+     80, 80, 50, 50, 30]                # right arm
+kd: [3, 3, 3, 4, 2, 2,
+     3, 3, 3, 4, 2, 2,
+     3, 3,
+     3, 3, 2, 2, 1,
+     3, 3, 2, 2, 1]
+
+joint_groups:
+  legs:  ["*hip*", "*knee*", "*ankle*"]
+  waist: ["waist_*"]
+  arms:  ["*shoulder*", "*elbow*", "*wrist*"]
+
+cost_config:
+  foot_bodies:              [left_ankle_roll_link, right_ankle_roll_link]
+  flight_feet_links:        [left_ankle_roll_link, right_ankle_roll_link]
+  knee_ground_bodies:       [left_knee_link, right_knee_link]
+  undesired_allowed_bodies: [left_ankle_roll_link, right_ankle_roll_link, left_wrist_roll_link, right_wrist_roll_link]
+  # The model has no head body: track a synthetic head point fixed in the torso frame.
+  head_keypoint_parent: torso_link
+  head_keypoint_offset: [-0.005, 0.0, 0.372]

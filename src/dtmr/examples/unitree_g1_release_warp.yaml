@@ -1,0 +1,69 @@
+# Unitree G1 release config: the paper recipe. Gains from the descriptor (150/200/40).
+# Reference: pass --motion_path <clip>_50Hz.npz (or set motion_path below); docs: "Reference motions".
+# Run:
+#   dtmr --config src/dtmr/examples/unitree_g1_release_warp.yaml --output_dir output/unitree_g1_release
+robot: unitree_g1
+seed: 0
+Nsample: 4096
+Hsample: 40
+Hnode: 8
+Ndiffuse: 5
+Ndiffuse_init: 5
+sigma_scale: 0.15
+temp_sample: 0.3
+horizon_diffuse_factor: 0.95
+traj_diffuse_factor: 0.6
+dt: 0.02
+timestep: 0.005
+action_scale: 1.0
+motion_fps: 50
+dphi_exp_base: 2.0
+inner_rate_pd: true
+auto_joint_range: true
+joint_range_margin_abs: 0.5
+joint_range_margin_ratio: 0.05
+joint_range_round_to: 0.1
+joint_range_min_width: 0.05
+sigma_scale_phi: 0.3
+Ndiffuse_steady: 2
+Ndiffuse_dyn: 3
+dyn_lo: 1.5
+dyn_hi: 3.0
+elite_frac: 0.1
+Ndiffuse_warmup_steps: 25
+dyn_entry_floor_exp: 0
+dyn_end_exp: 2
+Ndiffuse_init_start_exp: -2
+Ndiffuse_warmup_start_exp: -2
+sigma_cert: 1
+sigma_cert_flat_ess: 0.55
+sigma_cert_skip_imp: -3.0
+sigma_cert_entry_mode: 1
+sigma_cert_rew_bad: -0.3
+sigma_cert_rew_good: -0.25
+sigma_cert_rew_ema: 10
+sigma_cert_max_iters: 6
+cost_config:
+  w_pos_relcom: 0.0
+  w_com: 0.0
+  w_orient_pure: 5.0
+  w_orient_offset: 0.0
+  w_energy: 0.05
+  w_dphi: 5.0
+  w_joint_vel: 1.0e-05
+  w_action_rate: 1.0
+  w_joint_jerk: 0.0
+  w_joint_limit: 0.0
+  joint_limit_margin: 0.1
+  joint_limit_use_physical: false
+  w_dphi_accel: 0.0
+  w_foot_slip: 0.0
+  foot_slip_dist_threshold: 0.0
+  w_pelvis: 28.0
+  w_pos_relpelvis: 14.0
+  w_joint_vel_ref: 0.01
+  cost_link_scale:
+    head: 16
+    torso_link: 16
+motion_path: ./data/REPLACE_ME/REPLACE_ME_50Hz.npz
+n_steps: 800

@@ -1,0 +1,48 @@
+# AgiBot X2 Ultra release config: the default recipe at the paper budget (Nsample 4096, Ndiffuse 5, traj_diffuse 0.8,
+# Ndiffuse_steady 2). Gains from the descriptor.
+# Reference: pass --motion_path <clip>_50Hz.npz (or set motion_path below); docs: "Reference motions".
+# Run:
+#   dtmr --config src/dtmr/examples/agibot_x2_ultra_release_warp.yaml --output_dir output/agibot_x2_ultra_release
+robot: agibot_x2_ultra
+seed: 0
+Nsample: 4096
+Hsample: 40
+Hnode: 8
+Ndiffuse: 5
+Ndiffuse_init: 5
+sigma_scale: 0.45
+temp_sample: 0.15
+horizon_diffuse_factor: 0.95
+traj_diffuse_factor: 0.8
+dt: 0.02
+timestep: 0.005
+action_scale: 1.0
+motion_fps: 50
+dphi_exp_base: 2.0
+inner_rate_pd: true
+auto_joint_range: true
+joint_range_margin_abs: 0.5
+joint_range_margin_ratio: 0.05
+joint_range_round_to: 0.1
+joint_range_min_width: 0.05
+sigma_scale_phi: 0.3
+Ndiffuse_steady: 2
+cost_config:
+  w_pos_relcom: 0.0
+  w_com: 0.0
+  w_orient_pure: 5.0
+  w_orient_offset: 0.0
+  w_energy: 0.05
+  w_dphi: 5.0
+  w_joint_vel: 0.01
+  w_action_rate: 1.0
+  w_joint_jerk: 0.0
+  w_dphi_accel: 0.0
+  w_foot_slip: 0.0
+  cost_link_scale:
+    torso_link: 16
+    head_pitch_link: 16
+  w_pelvis: 28.0
+  w_pos_relpelvis: 14.0
+motion_path: ./data/REPLACE_ME/REPLACE_ME_50Hz.npz
+n_steps: 800

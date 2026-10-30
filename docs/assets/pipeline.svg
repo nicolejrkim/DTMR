@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 130" width="1000" height="130" font-family="Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Where DTMR sits</title>
+  <desc id="d">Human motion is retargeted onto the robot, an importer writes the reference npz (robot qpos and link poses), DTMR tracks it with sampling-based MPC that jointly optimizes control and timing, and the run writes the trajectory, metrics and a video.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .box { fill: #f3f5f8; stroke: #c3c9d2; stroke-width: 1.5; }
+      .key { fill: #e8f0fe; stroke: #1f6feb; stroke-width: 2; }
+      .h { font-size: 15px; font-weight: 700; fill: #1b1f24; }
+      .s { font-size: 12px; fill: #4a5260; }
+      .c { font-size: 12px; font-family: Menlo, Consolas, monospace; fill: #1f4f9e; }
+      .e { stroke: #8a8f98; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="box" x="10" y="20" width="172" height="90" rx="10"/>
+  <text class="h" x="96" y="55" text-anchor="middle">Human motion</text>
+  <text class="s" x="96" y="80" text-anchor="middle">SEED, 100STYLE, your own</text>
+
+  <rect class="box" x="204" y="20" width="168" height="90" rx="10"/>
+  <text class="h" x="288" y="55" text-anchor="middle">Kinematic retarget</text>
+  <text class="s" x="288" y="80" text-anchor="middle">soma-retargeter, GMR, …</text>
+
+  <rect class="box" x="394" y="20" width="170" height="90" rx="10"/>
+  <text class="h" x="479" y="50" text-anchor="middle">Reference motion</text>
+  <text class="s" x="479" y="73" text-anchor="middle">robot qpos + link poses</text>
+  <text class="c" x="479" y="92" text-anchor="middle">&lt;name&gt;_50Hz.npz</text>
+
+  <rect class="key" x="586" y="20" width="212" height="90" rx="10"/>
+  <text class="h" x="692" y="50" text-anchor="middle">DTMR</text>
+  <text class="s" x="692" y="73" text-anchor="middle">sampling-based MPC</text>
+  <text class="s" x="692" y="92" text-anchor="middle">jointly optimizes control and timing</text>
+
+  <rect class="box" x="820" y="20" width="170" height="90" rx="10"/>
+  <text class="h" x="905" y="55" text-anchor="middle">Outputs</text>
+  <text class="s" x="905" y="80" text-anchor="middle">trajectory, metrics, video</text>
+
+  <path class="e" d="M182,65 L200,65" marker-end="url(#a)"/>
+  <path class="e" d="M372,65 L390,65" marker-end="url(#a)"/>
+  <path class="e" d="M564,65 L582,65" marker-end="url(#a)"/>
+  <path class="e" d="M798,65 L816,65" marker-end="url(#a)"/>
+</svg>

@@ -1,0 +1,12 @@
+# Unitree G1: run-up, hop, step, jump (competition triple jump), handcrafted (no mocap).
+#
+# The reference is generated, not downloaded:
+#   python -m dtmr.utils.data_pipeline.handcrafted.triplejump_g1 --out-dir data/handcrafted
+# (or `python -m dtmr.demo prepare g1_triplejump`). Every tracker setting is the
+# release recipe (unitree_g1_release_warp.yaml); only the clip and the step budget differ.
+# 265 frames at 50 fps = 5.3 s; 5 m/s approach, 6.7 m of jumps. A stress clip:
+# the flights are longer than anything in the mocap datasets.
+
+base_config: unitree_g1_release_warp.yaml
+motion_path: ./data/handcrafted/hc_triplejump_50Hz.npz
+n_steps: 500
