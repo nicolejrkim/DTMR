@@ -50,7 +50,7 @@ same clip with DTMR in MuJoCo, each with its release config.
   with a worked guide per dataset:
   - [Running a SEED motion](SEED_GUIDE.md): one clip of the paper's data.
   - [Running the 100 styles](STYLE100.md): whole-dataset batches.
-  - [A LAFAN1 walk](tutorial.md): the tutorial, end to end.
+  - [Running a LAFAN1 sprint](tutorial.md): the tutorial, end to end.
 - [Supported robots](robots.md), [Adding a robot](ADDING_A_ROBOT.md),
   [Configuration](configuration.md), [Troubleshooting](troubleshooting.md).
 

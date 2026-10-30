@@ -73,10 +73,10 @@ CSVs; the importer reads the G1 split:
 
 ```bash
 mkdir -p input/lafan1
-curl -L -o input/lafan1/walk1_subject1.csv \
-    https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset/resolve/main/g1/walk1_subject1.csv
-python -m dtmr.data.lafan1_csv_to_reference input/lafan1/walk1_subject1.csv \
-    --robot unitree_g1 --out-dir data/lafan1_walk1 --start 10 --end 20
+curl -L -o input/lafan1/sprint1_subject2.csv \
+    https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset/resolve/main/g1/sprint1_subject2.csv
+python -m dtmr.data.lafan1_csv_to_reference input/lafan1/sprint1_subject2.csv \
+    --robot unitree_g1 --out-dir data/lafan1_sprint1 --start 30 --end 40
 ```
 
 The takes are minutes long, hence `--start/--end`. The [tutorial](tutorial.md)

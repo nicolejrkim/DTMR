@@ -40,7 +40,7 @@ src/dtmr/
 ├── robots/      one descriptor per robot
 ├── examples/    one release config per robot
 └── models/      MJCF tracking scenes and meshes (vendor licences inside)
-demo_scripts/    one-command demos: a 100STYLE clip, the tutorial's LAFAN1 walk
+demo_scripts/    one-command demos: a 100STYLE clip, the tutorial's LAFAN1 sprint
 docs/            the documentation site
 docker/          Dockerfile (CUDA 12.6, Ubuntu 22.04)
 ```
@@ -53,7 +53,7 @@ The guide lives at **[jaeryeongnicolekim.com/DTMR](https://jaeryeongnicolekim.co
 - **[Reference motions](docs/HUMAN_MOTION.md)** - every supported motion source and retargeter, with a worked guide per dataset:
   - **[Running a SEED motion](docs/SEED_GUIDE.md)** - one clip of the paper's data
   - **[Running the 100 styles](docs/STYLE100.md)** - whole-dataset batches
-  - **[A LAFAN1 walk](docs/tutorial.md)** - the tutorial, end to end
+  - **[Running a LAFAN1 sprint](docs/tutorial.md)** - the tutorial, end to end
 - **[Supported robots](docs/robots.md)**, **[Adding a robot](docs/ADDING_A_ROBOT.md)**, **[Configuration](docs/configuration.md)**, **[Troubleshooting](docs/troubleshooting.md)**
 
 ## Quick Start
@@ -65,7 +65,7 @@ conda create -n dtmr python=3.10 -y && conda activate dtmr
 pip install -e .
 ```
 
-One command each: a freely licensed 100STYLE clip on the G1 (download once, retarget, track, render), or the [tutorial](docs/tutorial.md)'s LAFAN1 walk:
+One command each: a freely licensed 100STYLE clip on the G1 (download once, retarget, track, render), or the [tutorial](docs/tutorial.md)'s LAFAN1 sprint:
 
 ```bash
 bash demo_scripts/demo_100style.sh        # any style: bash demo_scripts/demo_100style.sh TwoFootJump

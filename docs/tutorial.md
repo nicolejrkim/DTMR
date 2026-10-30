@@ -1,7 +1,7 @@
 # Tutorial: track your own clip
 
 One human motion from download to a video of the Unitree G1 tracking it. The clip is a
-LAFAN1 walk from Unitree's retargeted release (no account needed, 2.6 MB); from step 2
+LAFAN1 sprint from Unitree's retargeted release (no account needed, 2.8 MB); from step 2
 on, every source in [Reference motions](HUMAN_MOTION.md) works the same way. Run
 everything from the repository root in the environment from [Installation](install.md),
 or run the whole tutorial as one command with `bash demo_scripts/demo_lafan1.sh`.
@@ -13,8 +13,8 @@ Unitree's release has the LAFAN1 takes retargeted to the G1:
 
 ```bash
 mkdir -p input/lafan1
-curl -L -o input/lafan1/walk1_subject1.csv \
-    https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset/resolve/main/g1/walk1_subject1.csv
+curl -L -o input/lafan1/sprint1_subject2.csv \
+    https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset/resolve/main/g1/sprint1_subject2.csv
 ```
 
 LAFAN1 is CC BY-NC-ND 4.0: fine for trying DTMR, not for redistributing what you make
@@ -23,25 +23,25 @@ from it.
 ## 2. Convert it to a reference
 
 ```bash
-python -m dtmr.data.lafan1_csv_to_reference input/lafan1/walk1_subject1.csv \
-    --robot unitree_g1 --out-dir data/lafan1_walk1 --start 10 --end 20
+python -m dtmr.data.lafan1_csv_to_reference input/lafan1/sprint1_subject2.csv \
+    --robot unitree_g1 --out-dir data/lafan1_sprint1 --start 30 --end 40
 ```
 
-`--start/--end` keep ten seconds of the 261 s take. The importer resamples to 50 Hz,
+`--start/--end` keep ten seconds of the 273 s take. The importer resamples to 50 Hz,
 matches the joints to the G1 model by name and prints the path to track:
 
 ```text
-[lafan1] 301 frames @ 30 Hz -> 501 frames @ 50 Hz; set motion_path: data/lafan1_walk1/walk1_subject1_50Hz.npz
+[lafan1] 301 frames @ 30 Hz -> 501 frames @ 50 Hz; set motion_path: data/lafan1_sprint1/sprint1_subject2_50Hz.npz
 ```
 
-It writes one file, `walk1_subject1_50Hz.npz`: the robot state per frame and every
+It writes one file, `sprint1_subject2_50Hz.npz`: the robot state per frame and every
 body's world pose per frame, which is what the tracker reads.
 
 ## 3. Look at it before tracking
 
 ```bash
 python -m dtmr.tools.render_rollout --robot unitree_g1 \
-    --ref data/lafan1_walk1/walk1_subject1_50Hz.npz --out output/lafan1_walk1/reference.mp4
+    --ref data/lafan1_sprint1/sprint1_subject2_50Hz.npz --out output/lafan1_sprint1/reference.mp4
 ```
 
 Without `--run` the renderer plays the reference itself. The robot should stand on the
@@ -54,12 +54,12 @@ pose.
 
 ```bash
 dtmr --config src/dtmr/examples/unitree_g1_release_warp.yaml \
-    --motion_path data/lafan1_walk1/walk1_subject1_50Hz.npz \
-    --output_dir output/lafan1_walk1 --no_viz --n_steps 30      # a quick check
+    --motion_path data/lafan1_sprint1/sprint1_subject2_50Hz.npz \
+    --output_dir output/lafan1_sprint1 --no_viz --n_steps 30      # a quick check
 
 dtmr --config src/dtmr/examples/unitree_g1_release_warp.yaml \
-    --motion_path data/lafan1_walk1/walk1_subject1_50Hz.npz \
-    --output_dir output/lafan1_walk1 --no_viz                   # the whole clip
+    --motion_path data/lafan1_sprint1/sprint1_subject2_50Hz.npz \
+    --output_dir output/lafan1_sprint1 --no_viz                   # the whole clip
 ```
 
 `--config` is the robot's release recipe and `--motion_path` the clip. The run stops when
@@ -68,13 +68,16 @@ per second of robot time, so raise it with `--n_steps` for clips longer than abo
 seconds. The progress bar shows the reward `rew`, the phase `phi` (0 to 1 through the
 reference), the phase rate `rdphi` (above zero: playing faster than real time, below:
 slower) and the steps per second `freq`. Expect 1 to 3 minutes of compute per second of
-motion on an RTX 4090 ([measured times](quickstart.md#how-long-a-run-takes)).
+motion on an RTX 4090 ([measured times](quickstart.md#how-long-a-run-takes)). This clip
+is a sprint the G1 cannot run at human speed: watch `rdphi` go below zero in the fast
+stretch, where DTMR slows the reference down, and the run take about 600 steps to play
+the 501 frames.
 
 ## 5. Watch the result
 
 ```bash
-python -m dtmr.tools.render_rollout --run output/lafan1_walk1 --robot unitree_g1 \
-    --ref data/lafan1_walk1/walk1_subject1_50Hz.npz --out output/lafan1_walk1/rollout.mp4
+python -m dtmr.tools.render_rollout --run output/lafan1_sprint1 --robot unitree_g1 \
+    --ref data/lafan1_sprint1/sprint1_subject2_50Hz.npz --out output/lafan1_sprint1/rollout.mp4
 ```
 
 The solid robot is the simulation, the translucent blue one the reference at the
@@ -96,9 +99,10 @@ tracker's phase:
 
 `<stamp>_dtw_metrics.yaml` aligns the whole rollout with the whole reference by dynamic
 time warping (`mean_cost` per aligned frame, `mean_reward` over the run), scoring the
-motion independently of its timing. A good G1 walk is around a centimetre of MPJPE; a
-constant offset of many centimetres usually means the reference is mis-scaled, mirrored
-or in the floor (step 3).
+motion independently of its timing. A calm G1 walk scores around a centimetre of MPJPE;
+this sprint, at the edge of what the G1 can do, lands around six centimetres in the
+world and four relative to the centre of mass. Many centimetres on an easy motion
+usually means the reference is mis-scaled, mirrored or in the floor (step 3).
 
 ## Other robots and sources
 

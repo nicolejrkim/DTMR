@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The tutorial (docs/tutorial.md) as one command: a LAFAN1 walk that Unitree retargeted
+# The tutorial (docs/tutorial.md) as one command: a LAFAN1 sprint that Unitree retargeted
 # to the G1, imported, tracked with DTMR and rendered next to its reference.
 #
 #   bash demo_scripts/demo_lafan1.sh
@@ -9,18 +9,18 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
-CLIP=walk1_subject1
+CLIP=sprint1_subject2
 CSV=input/lafan1/$CLIP.csv
-REF=data/lafan1_walk1/${CLIP}_50Hz.npz
-OUT=output/lafan1_walk1
+REF=data/lafan1_sprint1/${CLIP}_50Hz.npz
+OUT=output/lafan1_sprint1
 python -c "import dtmr" 2>/dev/null || { echo "dtmr is not installed in this environment; see docs/install.md" >&2; exit 1; }
 mkdir -p input/lafan1 "$OUT"
 
 if [ ! -f "$CSV" ]; then                                           # Unitree's LAFAN1 release, one clip
     curl -L -o "$CSV" "https://huggingface.co/datasets/lvhaidong/LAFAN1_Retargeting_Dataset/resolve/main/g1/$CLIP.csv"
 fi
-if [ ! -f "$REF" ]; then                                           # seconds 10 to 20, resampled to 50 Hz
-    python -m dtmr.data.lafan1_csv_to_reference "$CSV" --robot unitree_g1 --out-dir data/lafan1_walk1 --start 10 --end 20
+if [ ! -f "$REF" ]; then                                           # seconds 30 to 40, resampled to 50 Hz
+    python -m dtmr.data.lafan1_csv_to_reference "$CSV" --robot unitree_g1 --out-dir data/lafan1_sprint1 --start 30 --end 40
 fi
 if [ ! -f "$OUT/reference.mp4" ]; then                             # the reference on its own
     python -m dtmr.tools.render_rollout --robot unitree_g1 --ref "$REF" --out "$OUT/reference.mp4"
